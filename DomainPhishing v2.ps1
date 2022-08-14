@@ -1,10 +1,10 @@
 #SCRIPT EN POWERSHELL PARA ANLIZAR DOMINIOS EXTERNOS IDENTIFICADOS EN LOS REGISTROS LOGS DEL DOMINIO 
 #CREATED BY GIANCARLO PASQUALE BELLIDO
 
-#Si se desea analizar todos los dominios que realizaron una redireccion al dominio bisa.com descomente las lineas comentadas.
+#Si se desea analizar todos los dominios que realizaron una redireccion al dominio descomente las lineas comentadas.
 $log = $args[0]
 Get-Content $log |
-     Select-String -Pattern '^(\d+\.\d+\.\d+\.\d+)\s\S+\s\S+\s(\S+)\s\S+\s\S+\s(\/personas.php\?\S+)\sHTTP\/\d\.\d\"\s\d+\s\d+\s\"(\S+)\"' |
+     Select-String -Pattern '^(\d+\.\d+\.\d+\.\d+)\s\S+\s\S+\s(\S+)\s\S+\s\S+\s(\S+)\sHTTP\/\d\.\d\"\s\d+\s\d+\s\"(\S+)\"' |
      Foreach-Object {
         $ip, $fecha, $domain,  $phishing = $_.Matches[0].Groups[1..4].Value
         if(($phishing -NotMatch 'facebook')){
